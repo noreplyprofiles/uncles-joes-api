@@ -69,8 +69,8 @@ The backend queries the following BigQuery tables:
 ## Loyalty Points Logic
 Loyalty points are computed dynamically from order history:
 
-- 1 point per whole dollar spent  
-- Values are rounded down per order  
+- 1 point per whole dollar spent.
+- Values are rounded down per order.  
 
 Example:
 - $15.89 → 15 points  

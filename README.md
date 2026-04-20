@@ -92,3 +92,5 @@ poetry run uvicorn app.main:app --reload
 Notes
 All Coffee Club members share password: Coffee123!
 This is a read-first system (no payments implemented)
+
+.

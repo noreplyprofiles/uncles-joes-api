@@ -8,6 +8,8 @@ The backend is built with **FastAPI** and deployed as a standalone service on **
 
 The API is responsible for exposing structured data to the frontend application via REST endpoints.
 
+Reviewed by: Nico Mann
+
 ---
 
 ## System Architecture

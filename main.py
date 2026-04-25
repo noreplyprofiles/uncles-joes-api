@@ -32,9 +32,29 @@ class MenuItem(BaseModel):
     price: float
 
 @app.get("/locations", response_model=List[Location])
-def get_locations():
-    query = "SELECT id, city, state, address_one, open_for_business FROM `mgmt-545-gp.uncle_joes.locations`"
-    rows = client.query(query).result()
+def get_locations(
+    state: str = None,
+    city: str = None,
+    open_for_business: bool = None,
+    limit: int = 50,
+    offset: int = 0,
+):
+    query = "SELECT id, city, state, address_one, open_for_business FROM `mgmt-545-gp.uncle_joes.locations` WHERE 1=1"
+    params = []
+    if state:
+        query += " AND LOWER(state) = LOWER(@state)"
+        params.append(bigquery.ScalarQueryParameter("state", "STRING", state))
+    if city:
+        query += " AND LOWER(city) = LOWER(@city)"
+        params.append(bigquery.ScalarQueryParameter("city", "STRING", city))
+    if open_for_business is not None:
+        query += " AND open_for_business = @open_for_business"
+        params.append(bigquery.ScalarQueryParameter("open_for_business", "BOOL", open_for_business))
+    query += " ORDER BY state, city LIMIT @limit OFFSET @offset"
+    params.append(bigquery.ScalarQueryParameter("limit", "INT64", limit))
+    params.append(bigquery.ScalarQueryParameter("offset", "INT64", offset))
+    job_config = bigquery.QueryJobConfig(query_parameters=params)
+    rows = client.query(query, job_config=job_config).result()
     return [dict(row) for row in rows]
 
 @app.get("/locations/{location_id}", response_model=Location)

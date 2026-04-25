@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "uncle-joes-api"
+version = "0.1.0"
+description = "API for Uncle Joe's locations and menu"
+authors = ["Your Name"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+fastapi = "^0.100.0"
+uvicorn = "^0.22.0"
+google-cloud-bigquery = "^3.11.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

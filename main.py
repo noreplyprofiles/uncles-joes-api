@@ -33,13 +33,13 @@ class MenuItem(BaseModel):
 
 @app.get("/locations", response_model=List[Location])
 def get_locations():
-    query = "SELECT id, city, state, address_one, open_for_business FROM `mgmt-545-gp.your_dataset.locations`"
+    query = "SELECT id, city, state, address_one, open_for_business FROM `mgmt-545-gp.uncle_joes.locations`"
     rows = client.query(query).result()
     return [dict(row) for row in rows]
 
 @app.get("/locations/{location_id}", response_model=Location)
 def get_location(location_id: str):
-    query = f"SELECT id, city, state, address_one, open_for_business FROM `mgmt-545-gp.your_dataset.locations` WHERE id = @id"
+    query = f"SELECT id, city, state, address_one, open_for_business FROM `mgmt-545-gp.uncle_joes.locations` WHERE id = @id"
     job_config = bigquery.QueryJobConfig(query_parameters=[bigquery.ScalarQueryParameter("id", "STRING", location_id)])
     rows = list(client.query(query, job_config=job_config).result())
     if not rows:
@@ -48,13 +48,13 @@ def get_location(location_id: str):
 
 @app.get("/menu", response_model=List[MenuItem])
 def get_menu():
-    query = "SELECT id, name, category, CAST(price AS FLOAT64) as price FROM `mgmt-545-gp.your_dataset.menu_items`"
+    query = "SELECT id, name, category, CAST(price AS FLOAT64) as price FROM `mgmt-545-gp.uncle_joes.menu_items`"
     rows = client.query(query).result()
     return [dict(row) for row in rows]
 
 @app.get("/menu/{item_id}", response_model=MenuItem)
 def get_menu_item(item_id: str):
-    query = f"SELECT id, name, category, CAST(price AS FLOAT64) as price FROM `mgmt-545-gp.your_dataset.menu_items` WHERE id = @id"
+    query = f"SELECT id, name, category, CAST(price AS FLOAT64) as price FROM `mgmt-545-gp.uncle_joes.menu_items` WHERE id = @id"
     job_config = bigquery.QueryJobConfig(query_parameters=[bigquery.ScalarQueryParameter("id", "STRING", item_id)])
     rows = list(client.query(query, job_config=job_config).result())
     if not rows:

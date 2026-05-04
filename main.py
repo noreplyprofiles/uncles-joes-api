@@ -25,6 +25,9 @@ class Location(BaseModel):
     state: Optional[str] = None
     address_one: Optional[str] = None
     open_for_business: Optional[bool] = None
+    wifi: Optional[bool] = None
+    drive_thru: Optional[bool] = None
+    door_dash: Optional[bool] = None
 
     hours_monday_open: Optional[int] = None
     hours_monday_close: Optional[int] = None
@@ -40,9 +43,6 @@ class Location(BaseModel):
     hours_saturday_close: Optional[int] = None
     hours_sunday_open: Optional[int] = None
     hours_sunday_close: Optional[int] = None
-    wifi: Optional[bool] = None
-    drive_thru: Optional[bool] = None
-    door_dash: Optional[bool] = None
 
 class MenuItem(BaseModel):
     id: str
@@ -100,32 +100,32 @@ def get_locations(
     offset: int = 0,
 ):
     query = """
-    SELECT 
-      id,
-      city,
-      state,
-      address_one,
-      open_for_business,
-      hours_monday_open,
-      hours_monday_close,
-      hours_tuesday_open,
-      hours_tuesday_close,
-      hours_wednesday_open,
-      hours_wednesday_close,
-      hours_thursday_open,
-      hours_thursday_close,
-      hours_friday_open,
-      hours_friday_close,
-      hours_saturday_open,
-      hours_saturday_close,
-      hours_sunday_open,
-      hours_sunday_close
-      wifi,
-      drive_thru,
-      door_dash,
-    FROM `mgmt-545-gp.uncle_joes.locations`
-    WHERE 1=1
-    """
+SELECT 
+  id,
+  city,
+  state,
+  address_one,
+  open_for_business,
+  wifi,
+  drive_thru,
+  door_dash,
+  hours_monday_open,
+  hours_monday_close,
+  hours_tuesday_open,
+  hours_tuesday_close,
+  hours_wednesday_open,
+  hours_wednesday_close,
+  hours_thursday_open,
+  hours_thursday_close,
+  hours_friday_open,
+  hours_friday_close,
+  hours_saturday_open,
+  hours_saturday_close,
+  hours_sunday_open,
+  hours_sunday_close
+FROM `mgmt-545-gp.uncle_joes.locations`
+WHERE 1=1
+"""
     params = []
     if state:
         query += " AND LOWER(state) = LOWER(@state)"
